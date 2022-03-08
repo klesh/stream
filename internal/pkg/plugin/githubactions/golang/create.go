@@ -37,6 +37,10 @@ func Create(options map[string]interface{}) (map[string]interface{}, error) {
 		}
 	}
 
+	if err := ghClient.AddRepoSecret("GH_TOKEN", viper.GetString("github_token")); err != nil {
+		return nil, err
+	}
+
 	for _, w := range workflows {
 		content, err := renderTemplate(w, opt)
 		if err != nil {
